@@ -37,9 +37,10 @@ public class Solution
             return String.format("User has name %s, id = %d", name, id);
         }
 
-        @Override
-        public DBObject initializeIdAndName(long id, String name) {
-            return new User();
+        public User initializeIdAndName(long id, String name) {
+            this.id = id;
+            this.name = name;
+            return this;
         }
     }
 
