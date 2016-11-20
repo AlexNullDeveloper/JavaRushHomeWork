@@ -75,6 +75,7 @@ public class Snake
      */
     private void move(int dx, int dy)
     {
+        //Создаем новую голову - новый "кусочек змеи".
         SnakeSection head = sections.get(0);
         head = new SnakeSection(head.getX() + dx, head.getY() + dy);
 
@@ -82,36 +83,31 @@ public class Snake
         checkBorders(head);
         if (!isAlive) return;
 
+        //Проверяем - не пересекает ли змея  саму себя
         checkBody(head);
         if (!isAlive) return;
 
-
-        Mouse mouse = Room.game.getMouse();
-        if (head.getX() == mouse.getX() && head.getY() == mouse.getY()) {
-            sections.add(0,head);
-            Room.game.eatMouse();
-        } else {
-            sections.add(0,head);
-            sections.remove(sections.size()-1);
-        }
-
-        //Создаем новую голову - новый "кусочек змеи".
-        //Проверяем - не вылезла ли голова за границу комнаты
-        //Проверяем - не пересекает ли змея  саму себя
         //Проверяем - не съела ли змея мышь.
-        //Двигаем змею.
-        /*б) в методе move(int dx, int dy) создать голову(кусочек змеи) с правильными координатами. Вызвать метод checkBody() и checkBorders()
-в) реализовать метод checkBody: если голова змеи пересекается с ее телом (любым из кусочков) - змея умирает (isAlive = false)
-*/
+        Mouse mouse = Room.game.getMouse();
+        if (head.getX() == mouse.getX() && head.getY() == mouse.getY()) //съела
+        {
+            sections.add(0, head);                  //Добавили новую голову
+            Room.game.eatMouse();                   //Хвот не удаляем, но создаем новую мышь.
+        }
+        else //просто движется
+        {
+            sections.add(0, head);                  //добавили новую голову
+            sections.remove(sections.size() - 1);   //удалили последний элемент с хвоста
+        }
     }
 
     /**
      *  Метод проверяет - находится ли новая голова в пределах комнаты
      */
-
     private void checkBorders(SnakeSection head)
     {
-        if (head.getY() < 0 || head.getX() < 0 || head.getX() > Room.game.getWidth() || head.getY() > Room.game.getHeight()) {
+        if ((head.getX() < 0 || head.getX() >= Room.game.getWidth()) || head.getY() < 0 || head.getY() >= Room.game.getHeight())
+        {
             isAlive = false;
         }
     }
@@ -121,7 +117,8 @@ public class Snake
      */
     private void checkBody(SnakeSection head)
     {
-        if (this.getSections().contains(head)) {
+        if (sections.contains(head))
+        {
             isAlive = false;
         }
     }
