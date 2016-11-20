@@ -1,8 +1,7 @@
 package com.javarush.test.level15.lesson02.task04;
 
 /* ООП - книги
-1. Создайте public static класс MarkTwainBook, который наследуется от Book.
-Имя автора [Mark Twain]. Параметр конструктора - имя книги.
+1. Создайте public static класс MarkTwainBook, который наследуется от Book. Имя автора [Mark Twain]. Параметр конструктора - имя книги.
 2. В классе MarkTwainBook реализуйте все абстрактные методы.
 3. Для метода getBook расширьте тип возвращаемого результата.
 4. Создайте по аналогии AgathaChristieBook. Имя автора [Agatha Christie].
@@ -22,46 +21,6 @@ public class Solution {
         System.out.println(books);
     }
 
-    public static class MarkTwainBook extends Book {
-
-        public MarkTwainBook(String book)
-        {
-            super(book);
-        }
-
-        @Override
-        public Book getBook()
-        {
-            return null;
-        }
-
-        @Override
-        public String getName()
-        {
-            return null;
-        }
-    }
-
-    public static class AgathaChristieBook extends Book {
-
-        public AgathaChristieBook (String book)
-        {
-            super(book);
-        }
-
-        @Override
-        public Book getBook()
-        {
-            return null;
-        }
-
-        @Override
-        public String getName()
-        {
-            return null;
-        }
-    }
-
     public abstract static class Book {
         private String author;
 
@@ -79,12 +38,56 @@ public class Solution {
 
             String output = "output";
             //Add your code here
+            if (this instanceof MarkTwainBook) {output = markTwainOutput;}
+            else output = agathaChristieOutput;
+
 
             return output;
         }
 
         public String toString() {
             return getOutputByBookType();
+        }
+    }
+
+    public static class MarkTwainBook extends Book {
+        public String bookName=null;
+
+        public MarkTwainBook(String bookName)
+        {
+            super("Mark Twain");
+            this.bookName = bookName;
+        }
+
+        @Override
+        public MarkTwainBook getBook()
+        {
+            return this;
+        }
+
+        @Override
+        public String getName()
+        {
+            return this.bookName;
+        }
+    }
+
+    public static class AgathaChristieBook extends  Book {
+        public String bookName;
+        public AgathaChristieBook(String book) {
+            super("Agatha Christie");
+            this.bookName = book;
+        }
+        @Override
+        public AgathaChristieBook getBook()
+        {
+            return this;
+        }
+
+        @Override
+        public String getName()
+        {
+            return this.bookName;
         }
     }
 }
