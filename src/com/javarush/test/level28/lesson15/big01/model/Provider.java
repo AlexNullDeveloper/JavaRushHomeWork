@@ -20,7 +20,6 @@ public class Provider {
     }
 
     public List<Vacancy> getJavaVacancies(String searchString) {
-
-        return Collections.emptyList();
+        return strategy.getVacancies(searchString);
     }
 }
